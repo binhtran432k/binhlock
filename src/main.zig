@@ -112,7 +112,6 @@ fn gethash() [*:0]u8 {
 
 fn readpw(dpy: ?*x11.Display, rr: *Xrandr, locks: []Lock, nscreens: c_int, hash: [*:0]u8) void {
     var running = true;
-    var rre: *x11.XRRScreenChangeNotifyEvent = undefined;
     var ksym: x11.KeySym = undefined;
     var ev: x11.XEvent = undefined;
     var buf: [32:0]u8 = undefined;
@@ -179,7 +178,7 @@ fn readpw(dpy: ?*x11.Display, rr: *Xrandr, locks: []Lock, nscreens: c_int, hash:
                 oldc = color;
             }
         } else if (rr.*.active != 0 and ev.type == rr.*.evbase + x11.RRScreenChangeNotify) {
-            rre = @ptrCast(&ev);
+            var rre: *x11.XRRScreenChangeNotifyEvent = @ptrCast(&ev);
             for (0..@intCast(nscreens)) |screen| {
                 if (locks[screen].win == rre.*.window) {
                     if (rre.*.rotation == x11.RR_Rotate_90 or
