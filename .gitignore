@@ -1,0 +1,5 @@
+*.o
+*.tar.gz
+binhlock
+zig-cache/
+zig-out/
