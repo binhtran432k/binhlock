@@ -232,8 +232,7 @@ fn lockscreen(dpy: ?*x11.Display, rr: *Xrandr, screen: usize) ?Lock {
     var ptgrab: c_int = -1;
     var kbgrab: c_int = -1;
     // Try to grab mouse pointer *and* keyboard for 600ms, else fail the lock
-    for (0..6) |i| {
-        _ = i;
+    for (0..6) |_| {
         if (ptgrab != x11.GrabSuccess) {
             ptgrab = x11.XGrabPointer(dpy, lock.root, x11.False, x11.ButtonPressMask | x11.ButtonReleaseMask | x11.PointerMotionMask, x11.GrabModeAsync, x11.GrabModeAsync, x11.None, invisible, x11.CurrentTime);
         }
